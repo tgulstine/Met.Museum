@@ -1,0 +1,14 @@
+﻿@page "/departments"
+@using Met.Museum.API
+
+<h3>Metropolitan Museum Departments</h3>
+
+@code {
+    [Inject]
+    public IDepartmentService _departmentService { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await _departmentService.GetDepartments();
+    }
+}
