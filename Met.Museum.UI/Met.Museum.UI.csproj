@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazorise" Version="1.7.1" />
+    <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.1" />
+    <PackageReference Include="Blazorise.Components" Version="1.7.1" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.7.1" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Met.Museum.API\Met.Museum.API.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,19 @@
+﻿
+@page "/artwork"
+@rendermode InteractiveServer
+
+@using Met.Museum.API
+@using Met.Museum.API.Models
+@using Blazorise.Components
+
+<h3>Artwork &amp; Artifacts</h3>
+
+<div class="row mb-2">
+    <div class="col-md-2"><strong>Department:</strong></div>
+    <div class="col-md-4">
+        <SelectList TItem="Department" TValue="long" Data="@_departments"
+                    TextField="@((item) => item.DisplayName)" ValueField="@((item) => item.DepartmentId)"
+                    @bind-SelectedValue="@_selectedDepartmentId" />
+    </div>
+</div>
+

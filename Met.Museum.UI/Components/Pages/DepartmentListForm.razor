@@ -1,14 +1,26 @@
 ﻿@page "/departments"
+
 @using Met.Museum.API
+@using Met.Museum.API.Models
+@using Blazorise.DataGrid
 
 <h3>Metropolitan Museum Departments</h3>
+
+<DataGrid TItem="Department" Data="@_departments">
+    <ChildContent>
+        <DataGridColumn TItem="Department" Field="DepartmentId"></DataGridColumn>
+        <DataGridColumn TItem="Department" Field="DisplayName"></DataGridColumn>
+    </ChildContent>
+</DataGrid>
 
 @code {
     [Inject]
     public IDepartmentService _departmentService { get; set; } = default!;
 
+    Department[]? _departments { get; set; } = default!;
+
     protected override async Task OnInitializedAsync()
     {
-        var result = await _departmentService.GetDepartments();
+        _departments = await _departmentService.GetDepartments();
     }
 }
