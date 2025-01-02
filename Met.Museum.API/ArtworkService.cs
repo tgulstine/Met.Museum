@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,12 @@ namespace Met.Museum.API
     {
         private readonly HttpClient client = new HttpClient();
         private IDataService<ErrorLog> _errorLogService { get; set; } = default!;
+        private IDataService<SearchHistory> _searchHistoryService { get; set; } = default!;
 
-        public ArtworkService(IDataService<ErrorLog> errorLogService)
+        public ArtworkService(IDataService<ErrorLog> errorLogService, IDataService<SearchHistory> searchHistoryService)
         {
             _errorLogService = errorLogService;
+            _searchHistoryService = searchHistoryService;
         }
 
         public async Task<List<string>?> GetArtworkIdsByDepartment(long departmentId)
@@ -35,11 +38,13 @@ namespace Met.Museum.API
         {
             try
             {
-                using HttpResponseMessage response =
-                await client.GetAsync($"https://collectionapi.metmuseum.org/public/collection/v1/search?q={keyword}");
+                var url = $"https://collectionapi.metmuseum.org/public/collection/v1/search?q={keyword}";
+                using HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var artworksModel = JsonConvert.DeserializeObject<ArtworksModel>(responseBody);
+
+                await _searchHistoryService.Save(new SearchHistory { DateCreated = DateTime.Now, SearchUrl = new Uri(url) });
 
                 // department list is nested under parent element
                 return artworksModel?.ObjectIDs?.ToList().ConvertAll<string>(x => x.ToString());
