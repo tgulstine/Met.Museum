@@ -2,7 +2,9 @@ using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Met.Museum.API;
+using Met.Museum.Data;
 using Met.Museum.UI.Components;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddSingleton<IDepartmentService, DepartmentService>();
 builder.Services.AddSingleton<IArtworkService, ArtworkService>();
+builder.Services.TryAdd(ServiceDescriptor.Singleton(typeof(IDataService<>), typeof(DataService<>)));
 
 builder.Services
     .AddBlazorise(options =>

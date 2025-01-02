@@ -7,6 +7,8 @@ namespace Met.Museum.API
     {
         Task<List<string>?> GetArtworkIdsByDepartment(long departmentId);
 
+        Task<List<string>?> GetArtworkIdsByKeyword(string? keyword);
+
         Task<ArtworkDetailsModel?> GetArtworkById(string id);
     }
 }

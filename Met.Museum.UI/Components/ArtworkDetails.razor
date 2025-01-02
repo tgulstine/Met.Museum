@@ -1,5 +1,52 @@
-﻿<h3>ArtworkDetails</h3>
+﻿@using Met.Museum.API
 
-@code {
+<h3>ArtworkDetails</h3>
 
+
+@if (_artworkDetailsModel is not null)
+{
+    <div class="row mb-2">
+        <div class="col-2">
+            <strong>Title:</strong>
+        </div>
+        <div class="col-8">
+            @_artworkDetailsModel.Title
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <strong>Artist:</strong>
+        </div>
+        <div class="col-8">
+            @_artworkDetailsModel.ArtistDisplayName
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <strong>Artist Bio:</strong>
+        </div>
+        <div class="col-8">
+            @_artworkDetailsModel.ArtistDisplayBio
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <strong>Department:</strong>
+        </div>
+        <div class="col-8">
+            @_artworkDetailsModel.Department
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div id="artworkImage" class="col-5">
+            @{
+                string? imageFilename = _artworkDetailsModel?.PrimaryImageSmall?.ToString();
+            }
+            <img src="@imageFilename" />
+        </div>
+    </div>
 }

@@ -10,21 +10,72 @@
 <h3>Artwork &amp; Artifacts</h3>
 
 <div class="row mb-2">
-    <div class="col-2"><strong>Department:</strong></div>
-    <div class="col-4">
-        <SelectList TItem="Department" TValue="long" Data="@_departments"
-                    TextField="@((item) => item.DisplayName)" ValueField="@((item) => item.DepartmentId)"
-                    @bind-SelectedValue="@_selectedDepartmentId" />
+    <div class="col-2">
+        <strong>Filter By:</strong>
+    </div>
+    <div class="col-6">
+        <RadioGroup TValue="string" Name="colors" CheckedValue="@_selectedSearchOption" CheckedValueChanged="@OnCheckedValueChanged">
+            @foreach (var searchOption in _searchOptions)
+            {
+                <Radio Value="@(searchOption)">@searchOption</Radio>
+            }
+        </RadioGroup>
     </div>
 </div>
+
+@if (_selectedSearchOption == ArtworkSearchForm.Department)
+{
+    <div class="row mb-2">
+        <div class="col-2"><strong>Department:</strong></div>
+        <div class="col-4">
+            <SelectList TItem="Department" TValue="long" Data="@_departments"
+            TextField="@((item) => item.DisplayName)" ValueField="@((item) => item.DepartmentId)"
+            @bind-SelectedValue="@_selectedDepartmentId" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <Button Color="Color.Dark" Clicked="@GetArtworkByDepartmentId">Get Artwork</Button>
+        </div>
+    </div>
+}
+
+@if (_selectedSearchOption == ArtworkSearchForm.Keyword)
+{
+    <div class="row mb-2">
+        <div class="col-2"><strong>Search For:</strong></div>
+        <div class="col-4">
+            <input class="form-control mb-3" type="text" @bind-value="@_currentKeyword" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <Button Color="Color.Dark" Clicked="@GetArtworkIdsByKeyword">Get Artwork</Button>
+        </div>
+    </div>
+}
 
 <div class="row mb-2">
-    <div class="col-2">
-        <Button Color="Color.Dark" Clicked="@GetArtworkByDepartmentId">Get Artwork</Button>
-    </div>
+    @if (_matchingArtworkIds?.Count > 1)
+    {
+        <div class="col-1 text-end">
+            <Button Clicked="@GetPreviousArtwork"><img src="./prev-arrow.jpg"></Button>
+        </div>
+        <div class="col-2 text-center">
+            @((_currentArtworkIndex + 1) + " of " + @_matchingArtworkIds.Count)
+        </div>
+        <div class="col-1">
+            <Button Clicked="@GetNextArtwork"><img src="./next-arrow.jpg"></Button>
+        </div>
+    }
 </div>
 
-<ArtworkDetails Id="1000"></ArtworkDetails>
+@if (_matchingArtworkIds is not null && _matchingArtworkIds.Count > 0 && _currentArtworkIndex is not null)
+{
+    <ArtworkDetails Id="@_matchingArtworkIds[_currentArtworkIndex.Value]"></ArtworkDetails>
+}
 
 
 

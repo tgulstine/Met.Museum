@@ -12,12 +12,20 @@ namespace Met.Museum.UI.Components
         [Parameter]
         public string? Id { get; set; }
 
+        public ArtworkDetailsModel? _artworkDetailsModel { get; set; } = default;
+
         protected override async Task OnInitializedAsync()
         {
             if (Id is not null)
             {
-                var result = await _artworkService.GetArtworkById(Id);
+                _artworkDetailsModel = await _artworkService.GetArtworkById(Id);
             }
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            if (Id is not null)
+                _artworkDetailsModel = await _artworkService.GetArtworkById(Id);
         }
     }
 }
