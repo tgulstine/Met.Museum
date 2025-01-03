@@ -1,26 +1,44 @@
 ﻿using Met.Museum.API.Models;
+using Met.Museum.Data;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Met.Museum.API
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly HttpClient client = new HttpClient();
+        private IDataService<ErrorLog> _errorLogService { get; set; } = default!;
+        private IDataService<SearchHistory> _searchHistoryService { get; set; } = default!;
+        private readonly IHttpClientFactory _factory;
+
+        public DepartmentService(IDataService<ErrorLog> errorLogService, IDataService<SearchHistory> searchHistoryService, IHttpClientFactory factory)
+        {
+            _errorLogService = errorLogService;
+            _searchHistoryService = searchHistoryService;
+            _factory = factory;
+        }
 
         public async Task<Department[]?> GetDepartments()
         {
-            using HttpResponseMessage response = await client.GetAsync($"https://collectionapi.metmuseum.org/public/collection/v1/departments");
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var departmentsModel = JsonConvert.DeserializeObject<DepartmentsModel>(responseBody);
+            try
+            {
+                using var client = _factory.CreateClient("Met.Museum");
 
-            // department list is nested under parent element
-            return departmentsModel?.Departments;
+                var url = $"departments";
+
+                using HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var departmentsModel = JsonConvert.DeserializeObject<DepartmentsModel>(responseBody);
+
+                await _searchHistoryService.Save(new SearchHistory { DateCreated = DateTime.Now, SearchUrl = new Uri($"{client.BaseAddress}{url}") });
+
+                return departmentsModel?.Departments;
+            }
+            catch (HttpRequestException e)
+            {
+                await _errorLogService.Save(new ErrorLog { DateCreated = DateTime.Now, ErrorMessage = e.Message });
+            }
+            return null;
         }
     }
 }

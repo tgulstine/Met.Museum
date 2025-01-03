@@ -16,6 +16,11 @@ builder.Services.AddSingleton<IDepartmentService, DepartmentService>();
 builder.Services.AddSingleton<IArtworkService, ArtworkService>();
 builder.Services.TryAdd(ServiceDescriptor.Singleton(typeof(IDataService<>), typeof(DataService<>)));
 
+builder.Services.AddHttpClient("Met.Museum", (serviceProvider, client) =>
+{
+    client.BaseAddress = new Uri("https://collectionapi.metmuseum.org/public/collection/v1/");
+});
+
 builder.Services
     .AddBlazorise(options =>
     {
