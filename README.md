@@ -16,7 +16,7 @@ https://github.com/tgulstine/Met.Museum/tree/master/Met.Museum.UI/wwwroot
 
 Here are the files used in the application from this folder:
 
-egyptian-works-met.jpg
-met-exterior.jpg
-next-arrow.jpg
+egyptian-works-met.jpg  
+met-exterior.jpg  
+next-arrow.jpg  
 prev-arrow.jpg
