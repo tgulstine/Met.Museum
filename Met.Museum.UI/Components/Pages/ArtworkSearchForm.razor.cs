@@ -23,12 +23,15 @@ namespace Met.Museum.UI.Components.Pages
 
         private const string Department = "Department";
         private const string Keyword = "Keyword";
+        private const string ArtworkId = "ArtworkId";
 
-        List<string> _searchOptions { get; set; } = new List<string> { Department, Keyword };
+        List<string> _searchOptions { get; set; } = new List<string> { Department, Keyword, ArtworkId };
 
         string _selectedSearchOption { get; set; } = Department;
 
         string? _currentKeyword { get; set; }
+
+        string? _currentArtworkId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -64,6 +67,12 @@ namespace Met.Museum.UI.Components.Pages
         protected async Task GetArtworkIdsByKeyword()
         {
             _matchingArtworkIds = await _artworkService.GetArtworkIdsByKeyword(_currentKeyword ?? string.Empty);
+            _currentArtworkIndex = 0;
+        }
+
+        protected void GetArtworkByArtworkId()
+        {
+            _matchingArtworkIds = new List<string>() { _currentArtworkId };
             _currentArtworkIndex = 0;
         }
 

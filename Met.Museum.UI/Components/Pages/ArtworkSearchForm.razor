@@ -57,6 +57,22 @@
     </div>
 }
 
+@if (_selectedSearchOption == ArtworkSearchForm.ArtworkId)
+{
+       <div class="row mb-2">
+        <div class="col-2"><strong>Artwork Id:</strong></div>
+        <div class="col-4">
+            <input class="form-control mb-3" type="text" @bind-value="@_currentArtworkId" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-2">
+            <Button Color="Color.Dark" Clicked="@GetArtworkByArtworkId">Get Artwork</Button>
+        </div>
+    </div> 
+}
+
 <div class="row mb-2">
     @if (_matchingArtworkIds?.Count > 1)
     {
