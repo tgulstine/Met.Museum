@@ -1,4 +1,4 @@
-# .NET Blazor Development - Using Just C# (No Javascript or SQL)
+## .NET Blazor Development - Using Just C# (No Javascript or SQL)
 
 This repository contains the .NET project completed during the course 
 
@@ -8,7 +8,7 @@ Public API Usage
 Blazorise UI Controls
 Entity Framework Core - Code-First Database Generation
 
-# Image Resources
+## Image Resources
 
 The application development process makes use of a number of images that are available here at this location:
 
