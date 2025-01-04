@@ -1,6 +1,7 @@
 ﻿using Met.Museum.API.Models;
 using Met.Museum.API;
 using Microsoft.AspNetCore.Components;
+using Blazorise.DataGrid;
 
 namespace Met.Museum.UI.Components.Pages
 {
@@ -72,8 +73,11 @@ namespace Met.Museum.UI.Components.Pages
 
         protected void GetArtworkByArtworkId()
         {
-            _matchingArtworkIds = new List<string>() { _currentArtworkId };
-            _currentArtworkIndex = 0;
+            if (_currentArtworkId is not null)
+            {
+                _matchingArtworkIds = new List<string>() { _currentArtworkId };
+                _currentArtworkIndex = 0;
+            }
         }
 
     }
