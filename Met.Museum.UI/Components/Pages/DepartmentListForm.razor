@@ -6,7 +6,7 @@
 
 <h3>Metropolitan Museum Departments</h3>
 
-<DataGrid TItem="Department" Data="@_departments">
+<DataGrid  PageSize="30" TItem="Department" Data="@_departments">
     <ChildContent>
         <DataGridColumn TItem="Department" Field="DepartmentId"></DataGridColumn>
         <DataGridColumn TItem="Department" Field="DisplayName"></DataGridColumn>
