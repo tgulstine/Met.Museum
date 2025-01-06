@@ -36,7 +36,7 @@
 
     <div class="row mb-2">
         <div class="col-2">
-            <Button Color="Color.Dark" Clicked="@GetArtworkByDepartmentId">Get Artwork</Button>
+            <Button Color="Color.Dark" Clicked="@GetArtworkByDepartmentId" Disabled="@(_dailyHitCount >= _maxAllowedHits)">Get Artwork</Button>
         </div>
     </div>
 }
@@ -52,7 +52,7 @@
 
     <div class="row mb-2">
         <div class="col-2">
-            <Button Color="Color.Dark" Clicked="@GetArtworkIdsByKeyword">Get Artwork</Button>
+            <Button Color="Color.Dark" Clicked="@GetArtworkIdsByKeyword" Disabled="@(_dailyHitCount >= _maxAllowedHits)">Get Artwork</Button>
         </div>
     </div>
 }
@@ -68,7 +68,7 @@
 
     <div class="row mb-2">
         <div class="col-2">
-            <Button Color="Color.Dark" Clicked="@GetArtworkByArtworkId">Get Artwork</Button>
+            <Button Color="Color.Dark" Clicked="@GetArtworkByArtworkId" Disabled="@(_dailyHitCount >= _maxAllowedHits)">Get Artwork</Button>
         </div>
     </div> 
 }

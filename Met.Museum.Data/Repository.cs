@@ -15,5 +15,10 @@ namespace Met.Museum.Data
         {
             return await _context.SaveChangesAsync();
         }
+
+        public IEnumerable<T> Get()
+        {
+            return _context.Set<T>().ToList();  
+        }
     }
 }

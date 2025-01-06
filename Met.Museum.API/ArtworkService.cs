@@ -76,5 +76,12 @@ namespace Met.Museum.API
             }
             return null;
         }
+
+        public int GetDailyHitCount()
+        {
+            var today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            var records = _searchHistoryService.Get();
+            return records.Count(r => r.DateCreated != null && r.DateCreated > today);
+        }
     }
 }

@@ -34,10 +34,16 @@ namespace Met.Museum.UI.Components.Pages
 
         string? _currentArtworkId { get; set; }
 
+        int? _dailyHitCount { get; set; } = 0;
+
+        int? _maxAllowedHits { get; set; } = 10;
+
         protected override async Task OnInitializedAsync()
         {
             _departments = (await _departmentService.GetDepartments())?.ToList();
             _departments?.Insert(0, new Department { DepartmentId = 0, DisplayName = "PLEASE SELECT" });
+
+            _dailyHitCount = _artworkService.GetDailyHitCount();
         }
 
         public async Task GetArtworkByDepartmentId()
@@ -79,6 +85,5 @@ namespace Met.Museum.UI.Components.Pages
                 _currentArtworkIndex = 0;
             }
         }
-
     }
 }

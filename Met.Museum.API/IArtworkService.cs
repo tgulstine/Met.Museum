@@ -10,5 +10,6 @@ namespace Met.Museum.API
         Task<List<string>?> GetArtworkIdsByKeyword(string? keyword);
 
         Task<ArtworkDetailsModel?> GetArtworkById(string id);
+        int GetDailyHitCount();
     }
 }
